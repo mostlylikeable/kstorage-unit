@@ -8,7 +8,7 @@ class BinaryUnitTest {
 
     @Test
     fun `test converting zero`() {
-        val test = ConvertTest()
+        val test = BinaryConvertTest()
 
         BinaryUnit.values().forEach { source ->
             BinaryUnit.values().forEach { target ->
@@ -19,7 +19,7 @@ class BinaryUnitTest {
 
     @Test
     fun `test converting all the way up`() {
-        val test = ConvertTest()
+        val test = BinaryConvertTest()
 
         test converting                              1024.0 from BYTE to KIBIBYTE shouldBe 1.0
         test converting                         1_048_576.0 from BYTE to MEBIBYTE shouldBe 1.0
@@ -65,9 +65,10 @@ class BinaryUnitTest {
 
         test converting 1024.0 from ZEBIBYTE to YOBIBYTE shouldBe 1.0
     }
+
     @Test
     fun `test converting all the way down`() {
-        val test = ConvertTest()
+        val test = BinaryConvertTest()
 
         test converting 1.0 from YOBIBYTE to BYTE     shouldBe 1_208_925_819_614_629_174_706_176.0
         test converting 1.0 from YOBIBYTE to KIBIBYTE shouldBe 1_180_591_620_717_411_303_424.0
@@ -114,9 +115,9 @@ class BinaryUnitTest {
         test converting 1.0 from KIBIBYTE to BYTE shouldBe 1024.0
     }
 
-        @Test
+    @Test
     fun `test converting to itself`() {
-        val test = ConvertTest()
+        val test = BinaryConvertTest()
 
         test converting 1.0 from BYTE     to BYTE     shouldBe 1.0
         test converting 1.0 from KIBIBYTE to KIBIBYTE shouldBe 1.0
@@ -151,7 +152,7 @@ class BinaryUnitTest {
 
     @Test
     fun `test converting evenly down`() {
-        val test = ConvertTest()
+        val test = BinaryConvertTest()
 
         test converting 1.0 from KIBIBYTE to BYTE     shouldBe 1024.0
         test converting 1.0 from MEBIBYTE to KIBIBYTE shouldBe 1024.0
@@ -183,7 +184,7 @@ class BinaryUnitTest {
 
     @Test
     fun `test converting evenly up`() {
-        val test = ConvertTest()
+        val test = BinaryConvertTest()
 
         test converting 1024.0 from BYTE     to KIBIBYTE shouldBe 1.0
         test converting 1024.0 from KIBIBYTE to MEBIBYTE shouldBe 1.0
@@ -215,7 +216,7 @@ class BinaryUnitTest {
 
     @Test
     fun `test converting unevenly down`() {
-        val test = ConvertTest()
+        val test = BinaryConvertTest()
 
         test converting 0.1 from KIBIBYTE to BYTE     shouldBe 102.4
         test converting 0.1 from MEBIBYTE to KIBIBYTE shouldBe 102.4
@@ -256,7 +257,7 @@ class BinaryUnitTest {
 
     @Test
     fun `test converting unevenly up`() {
-        val test = ConvertTest()
+        val test = BinaryConvertTest()
 
         test converting 102.4 from BYTE     to KIBIBYTE shouldBe 0.1
         test converting 102.4 from KIBIBYTE to MEBIBYTE shouldBe 0.1
@@ -310,17 +311,17 @@ class BinaryUnitTest {
     }
 }
 
-class ConvertTest {
+class BinaryConvertTest {
     private var value: Double? = null
     private var source: BinaryUnit? = null
     private var target: BinaryUnit? = null
 
     private val failMessage: String get() = "converting $value $source to $target -> "
 
-    infix fun converting(value: Double): ConvertTest = this.apply { this.value = value }
-    infix fun from(source: BinaryUnit): ConvertTest = this.apply { this.source = source }
-    infix fun to(target: BinaryUnit): ConvertTest = this.apply { this.target = target }
-    infix fun shouldBe(expected: Double): ConvertTest = this.apply {
+    infix fun converting(value: Double): BinaryConvertTest = this.apply { this.value = value }
+    infix fun from(source: BinaryUnit): BinaryConvertTest = this.apply { this.source = source }
+    infix fun to(target: BinaryUnit): BinaryConvertTest = this.apply { this.target = target }
+    infix fun shouldBe(expected: Double): BinaryConvertTest = this.apply {
         assertEquals(expected, convertBinaryUnit(value!!, source!!, target!!), failMessage)
     }
 }

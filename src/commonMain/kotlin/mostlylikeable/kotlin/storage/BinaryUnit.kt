@@ -12,7 +12,7 @@ enum class BinaryUnit(internal val bytesPer: Double) {
     KIBIBYTE(1024.0),
 
     /**
-     * Storage unit representing 1 MiB, which is 1024 ^ 2 bytes (1,048,576 bytes) .
+     * Storage unit representing 1 MiB, which is 1024 ^ 2 bytes (1,048,576 bytes).
      */
     MEBIBYTE(1_048_576.0),
 

@@ -3,10 +3,13 @@ package mostlylikeable.kotlin.storage
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
+import kotlin.jvm.JvmInline
 
 private inline val storedAsUnit get() = BinaryUnit.BYTE
+private inline val unitScale get() = 1024
 
-inline class BinarySize internal constructor(internal val value: Double) : Comparable<BinarySize> {
+@JvmInline
+value class BinarySize internal constructor(internal val value: Double) : Comparable<BinarySize> {
 
     init {
         require(this.value.isNaN().not())
@@ -23,6 +26,8 @@ inline class BinarySize internal constructor(internal val value: Double) : Compa
     // operators
     // todo: incr and decr?
     operator fun unaryMinus(): BinarySize = BinarySize(-this.value)
+    operator fun inc(): BinarySize = BinarySize(this.value + 1)
+    operator fun dec(): BinarySize = BinarySize(this.value - 1)
 
     operator fun plus(that: BinarySize): BinarySize = BinarySize(this.value + that.value)
     operator fun minus(other: BinarySize): BinarySize = BinarySize(this.value - other.value)
@@ -54,21 +59,21 @@ inline class BinarySize internal constructor(internal val value: Double) : Compa
     fun toInt(unit: BinaryUnit): Int = toDouble(unit).toInt()
 
     @PublishedApi
-    internal val zebibytesComponent: Long get() = (inZebibytes % 1024).toLong()
+    internal val zebibytesComponent: Long get() = (inZebibytes % unitScale).toLong()
     @PublishedApi
-    internal val exbibytesComponent: Long get() = (inExbibytes % 1024).toLong()
+    internal val exbibytesComponent: Long get() = (inExbibytes % unitScale).toLong()
     @PublishedApi
-    internal val pebibytesComponent: Long get() = (inPebibytes % 1024).toLong()
+    internal val pebibytesComponent: Long get() = (inPebibytes % unitScale).toLong()
     @PublishedApi
-    internal val tebibytesComponent: Long get() = (inTebibytes % 1024).toLong()
+    internal val tebibytesComponent: Long get() = (inTebibytes % unitScale).toLong()
     @PublishedApi
-    internal val gibibytesComponent: Long get() = (inGibibytes % 1024).toLong()
+    internal val gibibytesComponent: Long get() = (inGibibytes % unitScale).toLong()
     @PublishedApi
-    internal val mebibytesComponent: Long get() = (inMebibytes % 1024).toLong()
+    internal val mebibytesComponent: Long get() = (inMebibytes % unitScale).toLong()
     @PublishedApi
-    internal val kibibytesComponent: Long get() = (inKibibytes % 1024).toLong()
+    internal val kibibytesComponent: Long get() = (inKibibytes % unitScale).toLong()
     @PublishedApi
-    internal val bytesComponent:     Long get() = (inBytes % BinaryUnit.KIBIBYTE.bytesPer).toLong()
+    internal val bytesComponent:     Long get() = (inBytes % unitScale).toLong()
 
     @OptIn(ExperimentalContracts::class)
     inline fun <T> toComponents(
@@ -134,8 +139,8 @@ inline class BinarySize internal constructor(internal val value: Double) : Compa
 }
 
 fun Int.toBinarySize(unit: BinaryUnit): BinarySize = toDouble().toBinarySize(unit)
-val Int.byte get() = toBinarySize(BinaryUnit.BYTE)
-val Int.bytes get() = toBinarySize(BinaryUnit.BYTE)
+val Int.byteBinary get() = toBinarySize(BinaryUnit.BYTE)
+val Int.bytesBinary get() = toBinarySize(BinaryUnit.BYTE)
 val Int.kibibyte get() = toBinarySize(BinaryUnit.KIBIBYTE)
 val Int.kibibytes get() = toBinarySize(BinaryUnit.KIBIBYTE)
 val Int.mebibyte get() = toBinarySize(BinaryUnit.MEBIBYTE)
@@ -154,8 +159,8 @@ val Int.yobibyte get() = toBinarySize(BinaryUnit.YOBIBYTE)
 val Int.yobibytes get() = toBinarySize(BinaryUnit.YOBIBYTE)
 
 fun Long.toBinarySize(unit: BinaryUnit): BinarySize = toDouble().toBinarySize(unit)
-val Long.byte get() = toBinarySize(BinaryUnit.BYTE)
-val Long.bytes get() = toBinarySize(BinaryUnit.BYTE)
+val Long.byteBinary get() = toBinarySize(BinaryUnit.BYTE)
+val Long.bytesBinary get() = toBinarySize(BinaryUnit.BYTE)
 val Long.kibibyte get() = toBinarySize(BinaryUnit.KIBIBYTE)
 val Long.kibibytes get() = toBinarySize(BinaryUnit.KIBIBYTE)
 val Long.mebibyte get() = toBinarySize(BinaryUnit.MEBIBYTE)
@@ -174,8 +179,8 @@ val Long.yobibyte get() = toBinarySize(BinaryUnit.YOBIBYTE)
 val Long.yobibytes get() = toBinarySize(BinaryUnit.YOBIBYTE)
 
 fun Double.toBinarySize(unit: BinaryUnit): BinarySize = BinarySize(convertBinaryUnit(this, unit, storedAsUnit))
-val Double.byte get() = toBinarySize(BinaryUnit.BYTE)
-val Double.bytes get() = toBinarySize(BinaryUnit.BYTE)
+val Double.byteBinary get() = toBinarySize(BinaryUnit.BYTE)
+val Double.bytesBinary get() = toBinarySize(BinaryUnit.BYTE)
 val Double.kibibyte get() = toBinarySize(BinaryUnit.KIBIBYTE)
 val Double.kibibytes get() = toBinarySize(BinaryUnit.KIBIBYTE)
 val Double.mebibyte get() = toBinarySize(BinaryUnit.MEBIBYTE)

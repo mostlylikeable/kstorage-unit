@@ -55,7 +55,7 @@ class BinarySizeTest {
     fun `test unary operators`() {
         AssertEquals().also { test ->
             test that -(1.kibibyte).value isEqualTo -1024.0
-            test that -(1.byte).value isEqualTo -1.0
+            test that -(1.byteBinary).value isEqualTo -1.0
             test that -BinarySize.ZERO.value isEqualTo -0.0
         }
     }
@@ -64,11 +64,11 @@ class BinarySizeTest {
     fun `test addition`() {
         AssertEquals().also { test ->
             test that 1.kibibyte + 1.kibibyte isEqualTo 2.kibibytes
-            test that 1.byte + 1.kibibyte isEqualTo 1025.bytes
+            test that 1.byteBinary + 1.kibibyte isEqualTo 1025.bytesBinary
             test that 2.gibibytes - 1024.mebibytes isEqualTo 1.gibibyte
-            test that 10.bytes - (-5).bytes isEqualTo 15.bytes
-            test that 0.yobibytes + 10.bytes isEqualTo 10.bytes
-            test that 1.kibibyte + (-10).bytes isEqualTo 1014.bytes
+            test that 10.bytesBinary - (-5).bytesBinary isEqualTo 15.bytesBinary
+            test that 0.yobibytes + 10.bytesBinary isEqualTo 10.bytesBinary
+            test that 1.kibibyte + (-10).bytesBinary isEqualTo 1014.bytesBinary
             test that BinarySize(1.0) + BinarySize(1023.0) isEqualTo 1.kibibyte
         }
     }
@@ -77,7 +77,7 @@ class BinarySizeTest {
     fun `test multiplication`() {
         AssertEquals().also { test ->
             test that 1.kibibyte * 2 isEqualTo 2.kibibytes
-            test that 1.byte * 2048 isEqualTo 2.kibibytes
+            test that 1.byteBinary * 2048 isEqualTo 2.kibibytes
             test that 2.kibibytes * 5.0 isEqualTo 10.0.kibibytes
             test that 1.exbibyte * 1024 isEqualTo 1.zebibyte
             test that BinarySize(1024.0) * 20 isEqualTo 20.kibibytes
@@ -89,7 +89,7 @@ class BinarySizeTest {
     @Test
     fun `test division`() {
         AssertEquals().also { test ->
-            test that 2048.byte / 2 isEqualTo 1.kibibyte
+            test that 2048.byteBinary / 2 isEqualTo 1.kibibyte
             test that 1024.pebibytes / 8.0 isEqualTo 128.pebibytes
             test that 1.gibibyte / 1.kibibytes isEqualTo 1.mebibyte
             test that BinarySize(10240.0) / BinarySize(10.0) isEqualTo 1.kibibyte
@@ -130,7 +130,7 @@ class BinarySizeTest {
             test that 1.gibibyte.inGibibytes isEqualTo 1.0
             test that 1.mebibyte.inMebibytes isEqualTo 1.0
             test that 1.kibibyte.inKibibytes isEqualTo 1.0
-            test that 1.byte.inBytes         isEqualTo 1.0
+            test that 1.byteBinary.inBytes         isEqualTo 1.0
 
             test that 2.yobibytes.inYobibytes isEqualTo 2.0
             test that 2.zebibytes.inZebibytes isEqualTo 2.0
@@ -140,7 +140,7 @@ class BinarySizeTest {
             test that 2.gibibytes.inGibibytes isEqualTo 2.0
             test that 2.mebibytes.inMebibytes isEqualTo 2.0
             test that 2.kibibytes.inKibibytes isEqualTo 2.0
-            test that 2.bytes.inBytes         isEqualTo 2.0
+            test that 2.bytesBinary.inBytes         isEqualTo 2.0
 
             test that 1L.yobibyte.inYobibytes isEqualTo 1.0
             test that 1L.zebibyte.inZebibytes isEqualTo 1.0
@@ -150,7 +150,7 @@ class BinarySizeTest {
             test that 1L.gibibyte.inGibibytes isEqualTo 1.0
             test that 1L.mebibyte.inMebibytes isEqualTo 1.0
             test that 1L.kibibyte.inKibibytes isEqualTo 1.0
-            test that 1L.byte.inBytes         isEqualTo 1.0
+            test that 1L.byteBinary.inBytes         isEqualTo 1.0
 
             test that 2L.yobibytes.inYobibytes isEqualTo 2.0
             test that 2L.zebibytes.inZebibytes isEqualTo 2.0
@@ -160,7 +160,7 @@ class BinarySizeTest {
             test that 2L.gibibytes.inGibibytes isEqualTo 2.0
             test that 2L.mebibytes.inMebibytes isEqualTo 2.0
             test that 2L.kibibytes.inKibibytes isEqualTo 2.0
-            test that 2L.bytes.inBytes         isEqualTo 2.0
+            test that 2L.bytesBinary.inBytes         isEqualTo 2.0
 
             test that 1.0.yobibyte.inYobibytes isEqualTo 1.0
             test that 1.0.zebibyte.inZebibytes isEqualTo 1.0
@@ -170,7 +170,7 @@ class BinarySizeTest {
             test that 1.0.gibibyte.inGibibytes isEqualTo 1.0
             test that 1.0.mebibyte.inMebibytes isEqualTo 1.0
             test that 1.0.kibibyte.inKibibytes isEqualTo 1.0
-            test that 1.0.byte.inBytes         isEqualTo 1.0
+            test that 1.0.byteBinary.inBytes         isEqualTo 1.0
 
             test that 2.0.yobibytes.inYobibytes isEqualTo 2.0
             test that 2.0.zebibytes.inZebibytes isEqualTo 2.0
@@ -180,7 +180,7 @@ class BinarySizeTest {
             test that 2.0.gibibytes.inGibibytes isEqualTo 2.0
             test that 2.0.mebibytes.inMebibytes isEqualTo 2.0
             test that 2.0.kibibytes.inKibibytes isEqualTo 2.0
-            test that 2.0.bytes.inBytes         isEqualTo 2.0
+            test that 2.0.bytesBinary.inBytes         isEqualTo 2.0
         }
     }
 
@@ -267,15 +267,15 @@ class BinarySizeTest {
             test that 1.kibibyte.inKibibytes isEqualTo 1.0
             test that 1.kibibyte.inBytes     isEqualTo 1024.0
 
-            test that 1.byte.inYobibytes isEqualTo 8.271806125530277E-25
-            test that 1.byte.inZebibytes isEqualTo 8.470329472543003E-22
-            test that 1.byte.inExbibytes isEqualTo 8.673617379884035E-19
-            test that 1.byte.inPebibytes isEqualTo 8.881784197001252E-16
-            test that 1.byte.inTebibytes isEqualTo 9.094947017729282E-13
-            test that 1.byte.inGibibytes isEqualTo 9.313225746154785E-10
-            test that 1.byte.inMebibytes isEqualTo 9.5367431640625E-7
-            test that 1.byte.inKibibytes isEqualTo 9.765625E-4
-            test that 1.byte.inBytes     isEqualTo 1.0
+            test that 1.byteBinary.inYobibytes isEqualTo 8.271806125530277E-25
+            test that 1.byteBinary.inZebibytes isEqualTo 8.470329472543003E-22
+            test that 1.byteBinary.inExbibytes isEqualTo 8.673617379884035E-19
+            test that 1.byteBinary.inPebibytes isEqualTo 8.881784197001252E-16
+            test that 1.byteBinary.inTebibytes isEqualTo 9.094947017729282E-13
+            test that 1.byteBinary.inGibibytes isEqualTo 9.313225746154785E-10
+            test that 1.byteBinary.inMebibytes isEqualTo 9.5367431640625E-7
+            test that 1.byteBinary.inKibibytes isEqualTo 9.765625E-4
+            test that 1.byteBinary.inBytes     isEqualTo 1.0
         }
     }
 
@@ -294,21 +294,21 @@ class BinarySizeTest {
     @Test
     fun `test toString`() {
         AssertEquals().also { test ->
-            println((1.yobibyte.inBytes.bytes + 1_000_000.bytes).value)
+            println((1.yobibyte.inBytes.bytesBinary + 1_000_000.bytesBinary).value)
 
-            test that 1.bytes.toString()                               isEqualTo "1B"
-            test that 1_000.bytes.toString()                           isEqualTo "1000B"
-            test that 1_024.bytes.toString()                           isEqualTo "1KiB"
-            test that 1_000_000.bytes.toString()                       isEqualTo "976KiB 576B"
-            test that 1_048_576.bytes.toString()                       isEqualTo "1MiB"
-            test that 1_000_000_000.bytes.toString()                   isEqualTo "953MiB 690KiB 512B"
-            test that 1_073_741_824.bytes.toString()                   isEqualTo "1GiB"
-            test that 1_000_000_000_000.bytes.toString()               isEqualTo "931GiB 330MiB 324KiB"
-            test that 1_099_511_627_776.bytes.toString()               isEqualTo "1TiB"
-            test that 1_000_000_000_000_000.bytes.toString()           isEqualTo "909TiB 506GiB 588MiB 416KiB"
-            test that 1_125_899_906_842_624.bytes.toString()           isEqualTo "1PiB"
-            test that 1_000_000_000_000_000_000.bytes.toString()       isEqualTo "888PiB 182TiB 718GiB 630MiB 256KiB"
-            test that 1_152_921_504_606_846_976.bytes.toString()       isEqualTo "1EiB"
+            test that 1.bytesBinary.toString()                               isEqualTo "1B"
+            test that 1_000.bytesBinary.toString()                           isEqualTo "1000B"
+            test that 1_024.bytesBinary.toString()                           isEqualTo "1KiB"
+            test that 1_000_000.bytesBinary.toString()                       isEqualTo "976KiB 576B"
+            test that 1_048_576.bytesBinary.toString()                       isEqualTo "1MiB"
+            test that 1_000_000_000.bytesBinary.toString()                   isEqualTo "953MiB 690KiB 512B"
+            test that 1_073_741_824.bytesBinary.toString()                   isEqualTo "1GiB"
+            test that 1_000_000_000_000.bytesBinary.toString()               isEqualTo "931GiB 330MiB 324KiB"
+            test that 1_099_511_627_776.bytesBinary.toString()               isEqualTo "1TiB"
+            test that 1_000_000_000_000_000.bytesBinary.toString()           isEqualTo "909TiB 506GiB 588MiB 416KiB"
+            test that 1_125_899_906_842_624.bytesBinary.toString()           isEqualTo "1PiB"
+            test that 1_000_000_000_000_000_000.bytesBinary.toString()       isEqualTo "888PiB 182TiB 718GiB 630MiB 256KiB"
+            test that 1_152_921_504_606_846_976.bytesBinary.toString()       isEqualTo "1EiB"
 //            test that 1_000_000_000_000_000_000_000.0.bytes.toString() isEqualTo "888PiB 182TiB 718GiB 630MiB 256KiB"
 
 //            // if remaining is larger than max Long, we just ignore it
